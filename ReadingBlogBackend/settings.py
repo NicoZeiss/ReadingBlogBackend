@@ -37,7 +37,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ReadingBlogBakend.urls'
+ROOT_URLCONF = 'ReadingBlogBackend.urls'
 
 TEMPLATES = [
     {
@@ -56,7 +56,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ReadingBlogBakend.wsgi.application'
+WSGI_APPLICATION = 'ReadingBlogBackend.wsgi.application'
 
 
 # Database
