@@ -1,16 +1,13 @@
+import os
+
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r6j1w5f1kc=v=0d8$l+f3pgyt6b&5dg#ew&bf=v+jsj7#qrv_u'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEVELOPMENT', False)
 
 ALLOWED_HOSTS = []
 
@@ -68,11 +65,11 @@ WSGI_APPLICATION = 'ReadingBlogBakend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'reading_blog_db',
-        'USER': 'rb_user',
-        'PASSWORD': 'rb_user_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
