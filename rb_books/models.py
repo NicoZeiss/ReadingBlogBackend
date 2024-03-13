@@ -29,6 +29,9 @@ class Editor(models.Model):
     """
     name = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.name
+
 
 class Audience(models.Model):
     """
@@ -71,7 +74,7 @@ class Book(models.Model):
     Model to represent a Book object
     """
     title = models.CharField(max_length=150)
-    sub_title = models.CharField(max_length=150)
+    sub_title = models.CharField(max_length=150, null=True, blank=True)
     volume = models.ForeignKey(Volume, null=True, blank=True, on_delete=models.SET_NULL)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     pages = models.PositiveIntegerField(null=True, blank=True)
@@ -83,5 +86,12 @@ class Book(models.Model):
     quotation = models.TextField(null=True, blank=True)
     opinion = models.TextField(null=True, blank=True)
     short_opinion = models.TextField(null=True, blank=True)
+    rating = models.ForeignKey(Rating, null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    published = models.BooleanField(default=False)
+
+    def __str__(self):
+        if self.sub_title is None or self.sub_title == '':
+            return self.title
+        return f'{self.title} - {self.volume.label} - {self.sub_title}'
