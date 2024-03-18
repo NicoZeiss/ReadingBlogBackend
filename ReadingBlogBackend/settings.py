@@ -5,11 +5,11 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-r6j1w5f1kc=v=0d8$l+f3pgyt6b&5dg#ew&bf=v+jsj7#qrv_u'
 
-DEBUG = os.environ.get('DJANGO_DEVELOPMENT', False)
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -65,11 +65,11 @@ WSGI_APPLICATION = 'ReadingBlogBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'NAME': 'reading_blog_db',
+        'USER': 'rb_user',
+        'PASSWORD': 'rb_user_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
