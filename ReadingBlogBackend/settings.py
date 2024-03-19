@@ -1,7 +1,6 @@
 import os
 
 from pathlib import Path
-# ceci est un test
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
