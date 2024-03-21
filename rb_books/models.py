@@ -378,7 +378,7 @@ class BookBase(SlugifiedModel):
         blank=True,
         verbose_name='Genres'
     )
-    summary = models.TextField(
+    summary = CKEditor5Field(
         verbose_name='Résumé',
         null=True,
         blank=True
@@ -506,7 +506,7 @@ class Book(BookBase):
         null=True,
         blank=True
     )
-    quotation = models.TextField(
+    quotation = CKEditor5Field(
         verbose_name='Citation',
         null=True,
         blank=True
@@ -516,7 +516,7 @@ class Book(BookBase):
         null=True,
         blank=True
     )
-    short_opinion = models.TextField(
+    short_opinion = CKEditor5Field(
         verbose_name='Avis résumé',
         null=True,
         blank=True
