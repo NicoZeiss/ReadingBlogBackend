@@ -155,6 +155,4 @@ admin.site.register(Book, BookAdmin)
 
 # TODO: customiser panel admin natif
 
-# TODO: customier fields CKEditor5
-
 # TODO: generer logo.ico pour Jazzmin

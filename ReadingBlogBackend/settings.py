@@ -200,3 +200,20 @@ JAZZMIN_SETTINGS = {
     "related_modal_active": True,
     "changeform_format": "horizontal_tabs",
 }
+
+# CKEditor 5 config
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading',
+            '|',
+            'outdent', 'indent',
+            '|',
+            'bold', 'italic', 'blockQuote', 'subscript', 'superscript',
+            '|',
+            'bulletedList', 'numberedList', 'link',
+            '|',
+            'fontSize', 'fontColor', 'fontBackgroundColor', 'removeFormat',
+        ],
+    }
+}

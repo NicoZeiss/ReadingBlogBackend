@@ -348,7 +348,7 @@ class Book(BookBase):
     about = CKEditor5Field(
         verbose_name='Au sujet du livre',
         null=True,
-        blank=True
+        blank=True,
     )
     created_at = models.DateTimeField(
         verbose_name='Date création',
