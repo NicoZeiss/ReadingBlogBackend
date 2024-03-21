@@ -133,6 +133,7 @@ JAZZMIN_SETTINGS = {
     'site_header': 'Les Victimes de Kelith',
     "site_brand": "Les Victimes de Kelith",
     'site_logo': 'img/lvdk_logo.png',
+    'site_icon': 'img/lvdk_logo.ico',
     "welcome_sign": "Bienvenue",
     "copyright": "NicoZeiss",
     "search_model": [
@@ -176,7 +177,7 @@ JAZZMIN_SETTINGS = {
     ],
     "order_with_respect_to": [
         "rb_books.Book",
-        "rb_books.Collection",
+        "rb_books.Series",
         "rb_books.Volume",
         "rb_books.Author",
         "rb_books.Editor",
@@ -187,7 +188,7 @@ JAZZMIN_SETTINGS = {
     ],
     "icons": {
         "rb_books.Book": "fas fa-book",
-        "rb_books.Collection": "fas fa-sitemap",
+        "rb_books.Series": "fas fa-sitemap",
         "rb_books.Volume": "fas fa-sort-numeric-down",
         "rb_books.Author": "fas fa-feather-alt",
         "rb_books.Editor": "fas fa-glasses",
@@ -216,4 +217,36 @@ CKEDITOR_5_CONFIGS = {
             'fontSize', 'fontColor', 'fontBackgroundColor', 'removeFormat',
         ],
     }
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": True,
+    "brand_colour": "navbar-purple",
+    "accent": "accent-pink",
+    "navbar": "navbar-purple navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-light-pink",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "sandstone",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    },
+    "actions_sticky_top": True
 }

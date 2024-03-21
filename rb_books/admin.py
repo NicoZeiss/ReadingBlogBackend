@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Volume, Author, Editor, Audience, Genre, Rating, Collection, Book, Category
+from .models import Author, Editor, Audience, Genre, Rating, Series, Book, Category
 
 
 class CustomModelAdmin(admin.ModelAdmin):
@@ -8,12 +8,6 @@ class CustomModelAdmin(admin.ModelAdmin):
     actions_on_top = False
 
     exclude = ['slug']
-
-
-class VolumeAdmin(CustomModelAdmin):
-    list_display = [
-        'label', 'code',
-    ]
 
 
 class AuthorAdmin(CustomModelAdmin):
@@ -42,28 +36,28 @@ class RatingAdmin(CustomModelAdmin):
     list_display_links = ['label', 'rating']
 
 
-class CollectionAdmin(CustomModelAdmin):
+class SeriesAdmin(CustomModelAdmin):
     list_display = [
-        'img_preview', 'title', 'author', 'editor', 'audience', 'volumes_count', 'complete',
+        'img_preview', 'title', 'show_title', 'author', 'editor', 'audience', 'volumes_count', 'complete',
     ]
     list_display_links = [
         'img_preview', 'title',
     ]
     list_editable = [
-        'complete',
+        'complete', 'show_title',
     ]
 
     fieldsets = [
         (
             None,
             {
-                'fields': ['title', 'author', 'editor', 'image', 'img_preview']
+                'fields': ['title', 'show_title', 'author', 'editor', 'image', 'img_preview']
             },
         ),
         (
             'Informations détaillées',
             {
-                'fields': ['audience', 'category', 'genres', 'summary', 'volumes_count', 'complete']
+                'fields': ['audience', 'category', 'genres', 'summary', 'volumes_count', 'complete',]
             }
         )
     ]
@@ -80,16 +74,31 @@ class CollectionAdmin(CustomModelAdmin):
 
 
 class BookAdmin(CustomModelAdmin):
+    """
+    The `BookAdmin` class is a custom model admin class that is used to customize the administration interface for the
+     `Book` model in the application.
+    Attributes:
+        - `list_display`: A list of fields to be displayed in the list view of the administration interface.
+        - `list_display_links`: A list of fields that should be linked to the change view of the administration
+        interface.
+        - `list_editable`: A tuple of fields that can be edited directly in the list view of the administration
+        interface.
+        - `fieldsets`: A list of fieldsets to be displayed in the create/update forms of the administration interface.
+        - `readonly_fields`: A list of fields that are readonly in the administration interface.
+        - `search_fields`: A list of fields that can be searched in the administration interface.
+        - `list_filter`: A list of fields that can be used for filtering in the administration interface.
+    Note: This class extends the `CustomModelAdmin` class.
+    """
     # List parameters
     list_display = [
-        'img_preview', '__str__', 'author', 'editor', 'audience', 'rating', 'incoming_reading', 'current_reading',
-        'published', 'published_at', 'created_at',
+        'img_preview', '__str__', 'series', 'author', 'editor', 'audience', 'rating', 'incoming_reading',
+        'current_reading', 'published', 'published_at', 'created_at',
     ]
     list_display_links = [
         'img_preview', '__str__',
     ]
     list_editable = (
-        'rating', 'incoming_reading', 'current_reading', 'published',
+        'incoming_reading', 'current_reading', 'published',
     )
 
     # Create/Update forms
@@ -97,7 +106,7 @@ class BookAdmin(CustomModelAdmin):
         (
             None,
             {
-                'fields': ['title', 'volume', 'collection', 'sub_title', 'author', 'editor', 'image', 'img_preview']
+                'fields': ['title', 'volume', 'series', 'author', 'editor', 'image', 'img_preview']
             },
         ),
         (
@@ -115,44 +124,34 @@ class BookAdmin(CustomModelAdmin):
         (
             'Publication',
             {
-                'fields': ['about', 'incoming_reading', 'current_reading', 'published', 'published_at', 'created_at']
+                'fields': [
+                    'about', 'incoming_reading', 'current_reading', 'published', 'published_at', 'created_at', 'slug'
+                ]
             }
         ),
     ]
     readonly_fields = [
-        'published_at', 'created_at', 'img_preview',
+        'slug', 'created_at', 'img_preview',
     ]
 
     # Search/Filter
     search_fields = [
-        'title', 'sub_title', 'volume__label', 'author__first_name', 'author__last_name', 'editor__name',
+        'title', 'volume__label', 'author__first_name', 'author__last_name', 'editor__name',
     ]
     list_filter = [
         'audience', 'rating', 'incoming_reading', 'current_reading', 'published', 'published_at',
     ]
 
 
-admin.site.register(Volume, VolumeAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Editor, EditorAdmin)
 admin.site.register(Audience, AudienceAdmin)
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Rating, RatingAdmin)
-admin.site.register(Collection, CollectionAdmin)
+admin.site.register(Series, SeriesAdmin)
 admin.site.register(Book, BookAdmin)
-
-# TODO: Dans Book supprimer le subtitle, et considérer que le title est le titre d'un volume. Si title vide, alors on
-#  copie title de collection
 
 # TODO: se renseigner sur l'app facultative FlatPages de Django
 
-# TODO: regarder fonctionnement des Validators (voir si ça peut servir pour valider titre/collection)
-
-# TODO: définir rep de stockage images de manière dynamique pour éviter dossiers trop volumineux,
-#  par ex : datetime.now().strftime('markdownx/%Y/%m/%d').
-#  Source https://neutronx.github.io/django-markdownx/customization/
-
 # TODO: customiser panel admin natif
-
-# TODO: generer logo.ico pour Jazzmin
