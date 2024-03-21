@@ -16,13 +16,13 @@ ALLOWED_HOSTS = ['localhost']
 
 INSTALLED_APPS = [
     'jazzmin',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_ckeditor_5',
 
     'rb_books',
 ]
@@ -96,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
@@ -122,3 +122,81 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Jazzmin config
+# Available icons https://fontawesome.com/v5/search
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+JAZZMIN_SETTINGS = {
+    'show_ui_builder': True,
+    'site_title': 'LVDK - Admin',
+    'site_header': 'Les Victimes de Kelith',
+    "site_brand": "Les Victimes de Kelith",
+    'site_logo': 'img/lvdk_logo.png',
+    "welcome_sign": "Bienvenue",
+    "copyright": "NicoZeiss",
+    "search_model": [
+        "rb_books.Book",
+        "rb_books.Collection",
+        "rb_books.Author",
+        "rb_books.Editor"
+    ],
+    "topmenu_links": [
+        {
+            "name": "Vers le site",
+            "url": "https://lesvictimesdekelith.blogspot.com/",
+            "new_window": True
+        },
+    ],
+    "usermenu_links": [
+        {
+            "name": "Facebook",
+            "icon": "fab fa-facebook",
+            "url": "https://www.facebook.com/LesVictimesdeKelith/",
+            "new_window": True
+        },
+        {
+            "name": "Twitter",
+            "icon": "fab fa-twitter",
+            "url": "https://twitter.com/ladykelith",
+            "new_window": True
+        },
+        {
+            "name": "Livraddict",
+            "icon": "fas fa-blog",
+            "url": "https://www.livraddict.com/profil/kelith/",
+            "new_window": True
+        },
+        {
+            "name": "Blogger",
+            "icon": "fas fa-blog",
+            "url": "https://www.blogger.com/profile/09384048323067180573",
+            "new_window": True
+        },
+    ],
+    "order_with_respect_to": [
+        "rb_books.Book",
+        "rb_books.Collection",
+        "rb_books.Volume",
+        "rb_books.Author",
+        "rb_books.Editor",
+        "rb_books.Category",
+        "rb_books.Genre",
+        "rb_books.Audience",
+        "rb_books.Rating",
+    ],
+    "icons": {
+        "rb_books.Book": "fas fa-book",
+        "rb_books.Collection": "fas fa-sitemap",
+        "rb_books.Volume": "fas fa-sort-numeric-down",
+        "rb_books.Author": "fas fa-feather-alt",
+        "rb_books.Editor": "fas fa-glasses",
+        "rb_books.Category": "fas fa-thumbtack",
+        "rb_books.Genre": "fas fa-dragon",
+        "rb_books.Audience": "fas fa-bullseye",
+        "rb_books.Rating": "fas fa-star-half-alt",
+    },
+    "custom_links": {},
+    "related_modal_active": True,
+    "changeform_format": "horizontal_tabs",
+}
