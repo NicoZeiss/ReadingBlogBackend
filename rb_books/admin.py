@@ -153,7 +153,8 @@ admin.site.register(Book, BookAdmin)
 #  par ex : datetime.now().strftime('markdownx/%Y/%m/%d').
 #  Source https://neutronx.github.io/django-markdownx/customization/
 
-# TODO: gérer les images résiduelles de la librairie markdown -> besoin de catcher les images.
-#  A tester:
-#  def extract_img_urls(md_text, begin_tag='![](', end_tag=')'):
-#     return [item.split(end_tag)[0] for item in md_text.split(begin_tag)[1:]]
+# TODO: customiser panel admin natif
+
+# TODO: customier fields CKEditor5
+
+# TODO: generer logo.ico pour Jazzmin
