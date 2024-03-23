@@ -108,7 +108,7 @@ class Volume(SlugifiedModel):
         verbose_name = 'Tome'
 
     def __str__(self):
-        return self.label.capitalize()
+        return self.label
 
 
 class Author(SlugifiedModel):
@@ -144,7 +144,45 @@ class Author(SlugifiedModel):
         Returns:
             string: The full name of the object, in the format "{first_name} {last_name}".
         """
-        return f'{self.first_name.capitalize()} {self.last_name.upper()}'
+        return f'{self.first_name} {self.last_name}'
+
+
+class Illustrator(SlugifiedModel):
+    """
+    Class Illustrator(SlugifiedModel)
+    A class representing an Illustrator.
+    Attributes:
+        first_name (CharField): The first name of the illustrator.
+        last_name (CharField): The last name of the illustrator.
+    Meta:
+        verbose_name (str): The human-readable name of the model.
+    Methods:
+        __str__(): Returns a string representation of the object.
+        full_name(): Returns the full name of the illustrator.
+    """
+    first_name = models.CharField(
+        verbose_name='Prénom',
+        max_length=50
+    )
+    last_name = models.CharField(
+        verbose_name='Nom de famille',
+        max_length=50
+    )
+
+    class Meta:
+        verbose_name = 'Illustrateur'
+
+    def __str__(self):
+        return self.full_name
+
+    @property
+    def full_name(self):
+        """
+        This method, `full_name`, is a property method that returns the full name of an object. It takes no parameters.
+        Returns:
+            string: The full name of the object, in the format "{first_name} {last_name}".
+        """
+        return f'{self.first_name} {self.last_name}'
 
 
 class Editor(SlugifiedModel):
@@ -171,7 +209,7 @@ class Editor(SlugifiedModel):
         verbose_name = 'Éditeur'
 
     def __str__(self):
-        return self.name.capitalize()
+        return self.name
 
 
 class Audience(SlugifiedModel):
@@ -206,7 +244,7 @@ class Audience(SlugifiedModel):
         verbose_name = 'Public'
 
     def __str__(self):
-        return self.label.capitalize()
+        return self.label
 
 
 class Genre(SlugifiedModel):
@@ -245,7 +283,7 @@ class Genre(SlugifiedModel):
         verbose_name = 'Genre'
 
     def __str__(self):
-        return self.label.capitalize()
+        return self.label
 
 
 class Rating(SlugifiedModel):
@@ -284,7 +322,7 @@ class Rating(SlugifiedModel):
         verbose_name = 'Note'
 
     def __str__(self):
-        return self.label.capitalize()
+        return self.label
 
 
 class Category(SlugifiedModel):
@@ -319,7 +357,7 @@ class Category(SlugifiedModel):
         verbose_name = 'Catégorie'
 
     def __str__(self):
-        return self.label.capitalize()
+        return self.label
 
 
 class BookBase(SlugifiedModel):
@@ -345,12 +383,17 @@ class BookBase(SlugifiedModel):
         verbose_name='Titre',
         max_length=150
     )
-    author = models.ForeignKey(
+    author = models.ManyToManyField(
         Author,
-        on_delete=models.SET_NULL,
-        null=True,
         blank=True,
         verbose_name='Auteur'
+    )
+    illustrator = models.ForeignKey(
+        Illustrator,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name='Illustrateur'
     )
     editor = models.ForeignKey(
         Editor,

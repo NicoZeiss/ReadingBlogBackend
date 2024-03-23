@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Author, Editor, Audience, Genre, Rating, Series, Book, Category
+from .models import Author, Editor, Audience, Genre, Rating, Series, Book, Category, Illustrator
 
 
 class CustomModelAdmin(admin.ModelAdmin):
@@ -11,6 +11,10 @@ class CustomModelAdmin(admin.ModelAdmin):
 
 
 class AuthorAdmin(CustomModelAdmin):
+    search_fields = ['first_name', 'last_name']
+
+
+class IllustratorAdmin(CustomModelAdmin):
     search_fields = ['first_name', 'last_name']
 
 
@@ -38,7 +42,8 @@ class RatingAdmin(CustomModelAdmin):
 
 class SeriesAdmin(CustomModelAdmin):
     list_display = [
-        'img_preview', 'title', 'show_title', 'author', 'editor', 'audience', 'volumes_count', 'complete',
+        'img_preview', 'title', 'show_title', 'illustrator', 'editor', 'audience', 'volumes_count',
+        'complete',
     ]
     list_display_links = [
         'img_preview', 'title',
@@ -51,7 +56,7 @@ class SeriesAdmin(CustomModelAdmin):
         (
             None,
             {
-                'fields': ['title', 'show_title', 'author', 'editor', 'image', 'img_preview']
+                'fields': ['title', 'show_title', 'author', 'illustrator', 'editor', 'image', 'img_preview']
             },
         ),
         (
@@ -69,7 +74,8 @@ class SeriesAdmin(CustomModelAdmin):
         'audience', 'complete',
     ]
     search_fields = [
-        'title', 'author__first_name', 'author__last_name', 'editor__name',
+        'title', 'author__first_name', 'author__last_name', 'illustrator__first_name', 'illustrator__last_name',
+        'editor__name',
     ]
 
 
@@ -91,7 +97,7 @@ class BookAdmin(CustomModelAdmin):
     """
     # List parameters
     list_display = [
-        'img_preview', '__str__', 'series', 'author', 'editor', 'audience', 'rating', 'incoming_reading',
+        'img_preview', '__str__', 'series', 'illustrator', 'editor', 'audience', 'rating', 'incoming_reading',
         'current_reading', 'published', 'published_at', 'created_at',
     ]
     list_display_links = [
@@ -106,7 +112,7 @@ class BookAdmin(CustomModelAdmin):
         (
             None,
             {
-                'fields': ['title', 'volume', 'series', 'author', 'editor', 'image', 'img_preview']
+                'fields': ['title', 'volume', 'series', 'author', 'illustrator', 'editor', 'image', 'img_preview']
             },
         ),
         (
@@ -136,7 +142,8 @@ class BookAdmin(CustomModelAdmin):
 
     # Search/Filter
     search_fields = [
-        'title', 'volume__label', 'author__first_name', 'author__last_name', 'editor__name',
+        'title', 'volume__label', 'author__first_name', 'author__last_name', 'illustrator__first_name',
+        'illustrator__last_name', 'editor__name',
     ]
     list_filter = [
         'audience', 'rating', 'incoming_reading', 'current_reading', 'published', 'published_at',
@@ -144,6 +151,7 @@ class BookAdmin(CustomModelAdmin):
 
 
 admin.site.register(Author, AuthorAdmin)
+admin.site.register(Illustrator, IllustratorAdmin)
 admin.site.register(Editor, EditorAdmin)
 admin.site.register(Audience, AudienceAdmin)
 admin.site.register(Genre, GenreAdmin)
