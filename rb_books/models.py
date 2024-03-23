@@ -726,7 +726,3 @@ class Book(BookBase):
         """
         if self._title_is_empty:
             self.title = self.series.title
-        self.author = self.series.author
-        self.editor = self.series.editor
-        self.audience = self.series.audience
-        self.category = self.series.category
