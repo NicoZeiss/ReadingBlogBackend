@@ -322,7 +322,7 @@ class Rating(SlugifiedModel):
         verbose_name = 'Note'
 
     def __str__(self):
-        return self.label
+        return str(self.rating)
 
 
 class Category(SlugifiedModel):
@@ -448,6 +448,7 @@ class BookBase(SlugifiedModel):
         return mark_safe(f'<img src = "{image_url}" width = "100" />')
 
 
+
 class Series(BookBase):
     """
     A class representing a series of books.
@@ -511,7 +512,7 @@ class Book(BookBase):
         __str__(): Returns the full title of the book.
         clean(): Validates the book data before saving.
         save(*args, **kwargs): Saves the book to the database.
-        _title_is_empty() -> bool: Checks if the title of the book is empty.
+        title_is_empty() -> bool: Checks if the title of the book is empty.
         _get_title_parts(): Returns a list of title parts for constructing the full title.
         full_title(): Returns the full title of the book.
         belongs_to_series(): Checks if the book belongs to a series.
@@ -650,13 +651,11 @@ class Book(BookBase):
         Example usage:
             save()
         """
-        if self.belongs_to_series:
-            self._match_collection_attributes()
         self.clean()
         return super().save(*args, **kwargs)
 
     @property
-    def _title_is_empty(self) -> bool:
+    def title_is_empty(self) -> bool:
         """
         Check if the title is empty.
         :param self: The object instance.
@@ -713,16 +712,3 @@ class Book(BookBase):
 
         """
         return self.series is not None
-
-    def _match_collection_attributes(self):
-        """
-        Update the attributes of the Collection object based on the attributes of the associated Series object.
-        Parameters:
-            self (Collection): The Collection object calling this method.
-        Returns:
-            None
-        Note:
-            This method is intended to be used internally and should not be called directly.
-        """
-        if self._title_is_empty:
-            self.title = self.series.title

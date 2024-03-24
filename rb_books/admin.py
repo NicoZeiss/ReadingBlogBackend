@@ -97,8 +97,8 @@ class BookAdmin(CustomModelAdmin):
     """
     # List parameters
     list_display = [
-        'img_preview', '__str__', 'series', 'illustrator', 'editor', 'audience', 'rating', 'incoming_reading',
-        'current_reading', 'published', 'published_at', 'created_at',
+        'img_preview', '__str__', 'series', 'get_authors', 'illustrator', 'editor', 'audience', 'get_rating',
+        'incoming_reading', 'current_reading', 'published', 'published_at', 'created_at',
     ]
     list_display_links = [
         'img_preview', '__str__',
@@ -112,26 +112,23 @@ class BookAdmin(CustomModelAdmin):
         (
             None,
             {
-                'fields': ['title', 'volume', 'series', 'author', 'illustrator', 'editor', 'image', 'img_preview']
+                'fields': [
+                    'title', 'volume', 'series', 'author', 'illustrator', 'editor', 'audience', 'pages', 'price',
+                    'category', 'genres', 'summary', 'image', 'img_preview'
+                ]
             },
-        ),
-        (
-            'Informations détaillées',
-            {
-                'fields': ['audience', 'pages', 'price', 'category', 'genres', 'summary']
-            }
         ),
         (
             'Avis',
             {
-                'fields': ['opinion', 'short_opinion', 'quotation', 'rating']
+                'fields': ['opinion', 'short_opinion', 'quotation', 'rating', 'about']
             }
         ),
         (
             'Publication',
             {
                 'fields': [
-                    'about', 'incoming_reading', 'current_reading', 'published', 'published_at', 'created_at', 'slug'
+                    'incoming_reading', 'current_reading', 'published', 'published_at', 'created_at', 'slug'
                 ]
             }
         ),
@@ -148,6 +145,42 @@ class BookAdmin(CustomModelAdmin):
     list_filter = [
         'audience', 'rating', 'incoming_reading', 'current_reading', 'published', 'published_at',
     ]
+
+    @admin.display(description='Auteur(s)')
+    def get_authors(self, obj):
+        return ', '.join([author.full_name for author in obj.author.all()])
+
+    get_authors.admin_order_field = 'author__last_name'
+
+    @admin.display(description='Note')
+    def get_rating(self, obj):
+        return obj.rating.rating if obj.rating else None
+
+    get_rating.admin_order_field = 'rating__rating'
+
+    def save_model(self, request, obj, form, change):
+        if form.instance.belongs_to_series:
+            if form.instance.title_is_empty:
+                form.instance.title = form.instance.series.title
+            if not form.instance.illustrator:
+                form.instance.illustrator = form.instance.series.illustrator
+            if not form.instance.editor:
+                form.instance.editor = form.instance.series.editor
+            if not form.instance.audience:
+                form.instance.audience = form.instance.series.audience
+            if not form.instance.category:
+                form.instance.category = form.instance.series.category
+        super().save_model(request, obj, form, change)
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        if form.instance.belongs_to_series:
+            if not form.instance.author.exists():
+                for author in form.instance.series.author.all():
+                    form.instance.author.add(author)
+            if not form.instance.genres.exists():
+                for genre in form.instance.series.genres.all():
+                    form.instance.genres.add(genre)
 
 
 admin.site.register(Author, AuthorAdmin)
