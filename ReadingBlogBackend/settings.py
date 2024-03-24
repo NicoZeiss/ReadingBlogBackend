@@ -192,7 +192,7 @@ JAZZMIN_SETTINGS = {
         "rb_books.Series": "fas fa-sitemap",
         "rb_books.Volume": "fas fa-sort-numeric-down",
         "rb_books.Author": "fas fa-feather-alt",
-        "rb_books.Illustrator": "fas fa-feather-alt",
+        "rb_books.Illustrator": "fas fa-paint-brush",
         "rb_books.Editor": "fas fa-glasses",
         "rb_books.Category": "fas fa-thumbtack",
         "rb_books.Genre": "fas fa-dragon",
