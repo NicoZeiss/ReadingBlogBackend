@@ -474,10 +474,6 @@ class Series(BookBase):
         verbose_name='Collection complète',
         default=False
     )
-    show_title = models.BooleanField(
-        verbose_name='Afficher le titre',
-        default=True
-    )
 
     class Meta:
         verbose_name = 'Saga'
@@ -602,6 +598,14 @@ class Book(BookBase):
         verbose_name='Lecture à venir',
         default=False
     )
+    show_series_title = models.BooleanField(
+        verbose_name='Afficher titre saga',
+        default=True
+    )
+    show_volume = models.BooleanField(
+        verbose_name='Afficher tome',
+        default=True
+    )
 
     class Meta:
         verbose_name = 'Livre'
@@ -675,7 +679,7 @@ class Book(BookBase):
         Returns:
             list: A list containing the parts of the title.
         """
-        if self.series and self.series.show_title:
+        if self.series and self.show_series_title:
             return [self.series.title, self.volume.label, self.title]
         return [self.title, self.volume.label] if self.belongs_to_series else [self.title]
 

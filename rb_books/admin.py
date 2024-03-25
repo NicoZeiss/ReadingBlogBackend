@@ -42,21 +42,21 @@ class RatingAdmin(CustomModelAdmin):
 
 class SeriesAdmin(CustomModelAdmin):
     list_display = [
-        'img_preview', 'title', 'show_title', 'illustrator', 'editor', 'audience', 'volumes_count',
+        'img_preview', 'title', 'illustrator', 'editor', 'audience', 'volumes_count',
         'complete',
     ]
     list_display_links = [
         'img_preview', 'title',
     ]
     list_editable = [
-        'complete', 'show_title',
+        'complete',
     ]
 
     fieldsets = [
         (
             None,
             {
-                'fields': ['title', 'show_title', 'author', 'illustrator', 'editor', 'image', 'img_preview']
+                'fields': ['title', 'author', 'illustrator', 'editor', 'image', 'img_preview']
             },
         ),
         (
@@ -97,14 +97,15 @@ class BookAdmin(CustomModelAdmin):
     """
     # List parameters
     list_display = [
-        'img_preview', '__str__', 'series', 'get_authors', 'illustrator', 'editor', 'audience', 'get_rating',
-        'incoming_reading', 'current_reading', 'published', 'published_at', 'created_at',
+        'img_preview', 'title', 'series', 'volume', 'show_series_title', 'show_volume', 'get_authors', 'illustrator',
+        'editor', 'audience', 'get_rating', 'incoming_reading', 'current_reading', 'published', 'published_at',
+        'created_at',
     ]
     list_display_links = [
-        'img_preview', '__str__',
+        'img_preview', 'title',
     ]
     list_editable = (
-        'incoming_reading', 'current_reading', 'published',
+        'show_series_title', 'show_volume', 'incoming_reading', 'current_reading', 'published',
     )
 
     # Create/Update forms
@@ -113,8 +114,8 @@ class BookAdmin(CustomModelAdmin):
             None,
             {
                 'fields': [
-                    'title', 'volume', 'series', 'author', 'illustrator', 'editor', 'audience', 'pages', 'price',
-                    'category', 'genres', 'summary', 'image', 'img_preview'
+                    'title', ('volume', 'show_volume',), ('series', 'show_series_title',), 'author', 'illustrator',
+                    'editor', 'audience', 'pages', 'price', 'category', 'genres', 'summary', 'image', 'img_preview'
                 ]
             },
         ),
